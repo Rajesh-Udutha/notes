@@ -1,0 +1,8 @@
+flush previliges
+GRANT PROXY ON '@' TO 'root'@'%' WITH GRANT OPTION 
+GRANT ALL ON db.* TO 'root'@'%' IDENTIFIED BY ' ' WITH GRANT OPTION
+CREATE USER 'shabari'@'%';
+GRANT ALL ON chinmayasepnew.* TO 'shabari'@'%' IDENTIFIED BY ' ' WITH GRANT OPTION
+
+here ' ' ->  password
+i have used the empty as password for root and shabari both users
