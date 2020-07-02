@@ -1,0 +1,69 @@
+1. otp bypass
+    we have been validating the otp through ajax, but in response we are getting 1 for failure and 0 for success.
+    if the user entered the wrong otp, then response be 1 but using Burp scanner intercepting, when we change 1 to 0 in response, even the otp entered is wrong, the response 
+    changing to 0 and user logins.
+    
+    remedy:
+      encrypted the response value in controller in php
+      and decrypter the response value in ajax success.
+      so that in response through Burp Scanner, only encrypted data will be shown. It is not possible to decrypt and change the value
+      
+2. Directory listing
+     When entering the images folder url in browser, it is displaying all the images names.
+     
+     remedy:
+     
+     connected to aws of server through putty
+     go to apache2.conf 
+     /etc/apache2/apache2.conf
+     
+     changed the following lines 
+     
+     <Directory /var/www>
+     Options Indexes FollowSymLinks
+     AllowOverride None
+     Require all granted
+     </Directory>
+     
+     to 
+        <Directory /var/www>
+     Options FollowSymLinks
+     AllowOverride None
+     Require all granted
+     </Directory>
+ 
+ 3. Frameable response (potential Clickjacking)
+    it is type of vulnerability that a hacking site will be loaded to your site as background in iframe
+    and  user clicks wherever on server hacking site will be clicked and redirected to hacking malware
+    
+    remedy
+    
+    connect to aws through putty
+    goto project folder and create/open .htaccess file and add following code
+    
+    Header set X-Frame_options : "DENY"
+    
+4. Information disclosure vulnerability
+    it is type of vulnerability that displaying the server information along with apache server info in ajax request
+    
+    remedy
+    connect to aws through putty
+    go to etc/apache2/
+    add following lines at last of file apache2.conf
+    
+    ServerTokens Prod
+    ServerSignature Off 
+    
+5. To hide php server info or Php version in any ajax request
+   
+   remedy
+    connect to aws through putty
+    go to etc/php/7.2/apache2/
+    add following lines at last of file php.ini
+    
+    expose_php = off
+    
+    
+For each and every step, you have to restart the apache server with following command
+
+service apache2 restart
