@@ -1,4 +1,4 @@
-flush previliges
+FLUSH PRIVILEGES;
 GRANT PROXY ON '@' TO 'root'@'%' WITH GRANT OPTION 
 GRANT ALL ON db.* TO 'root'@'%' IDENTIFIED BY ' ' WITH GRANT OPTION
 CREATE USER 'shabari'@'%';
