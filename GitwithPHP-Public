@@ -1,0 +1,27 @@
+Pushing the local project to the Public repository of GIT
+
+Step 1: Login/Create an account with GITHUB 
+Step 2: Create a new repository in git say name Mart
+        check Add Readme box and public mode while creating the repository.
+Step 3: After Creating, Redirect to Your repository, You will find only Readme file
+
+In your pc
+Step 1 : open command prompt, navigate to the directory, which you wanna push to git
+        say F:/xamp-7.2/htdocs/Mart>
+        here Mart is project, I want to move to git
+Step 2:
+
+      type and execute following commands in command prompt
+        git init
+        git add .
+        git commit -m "Initial commit"
+        git remote add Project-name <project url>
+          example : git remote add Mart https://github.com/Rajesh-Udutha/Mart
+        
+        git push -f origin master
+        
+       It will take some time to push
+       
+       
+Step 3: After completion, go to url (your repository) - you can see the files of project.
+        
