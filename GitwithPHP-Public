@@ -10,6 +10,9 @@ Step 1 : open command prompt, navigate to the directory, which you wanna push to
         say F:/xamp-7.2/htdocs/Mart>
         here Mart is project, I want to move to git
 Step 2:
+    Firstly you have to install the git in your pc
+    Follow the following link for installing Git in pc depending on platforms
+    https://www.atlassian.com/git/tutorials/install-git
 
       type and execute following commands in command prompt
         git init
