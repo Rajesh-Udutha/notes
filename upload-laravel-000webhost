@@ -1,0 +1,29 @@
+Follow the steps to upload laravel project to 000webhost
+
+The question is quite old however others may find this answer useful. Basically what you have to do is to configure the App to work properly in the new environment.
+
+1. Go to 000webhost cPanel > Settings > General > Reset website. You must make sure no other content is present in your site to prevent interference.
+
+2. Archive your entire Laravel Project in ZIP format.
+
+3. Upload the archive to 000webhost site to /public_html using File Manager.
+
+4. Move all files/folders which are on the same level with package.json to /
+
+5. Delete /public_html. You won't need it anymore.
+
+6. Rename /public to /public_html
+
+7. Go to /app/Providers/AppServiceProvider.php at register() method and append the following code inside it:
+
+    $this -> app -> bind('path.public', function() { return base_path('public_html'); });
+
+8. Open /.env. Copy APP_KEY value without base64:
+
+9. Go to /config/app.php, find 'key' and replace the line with the following code:
+
+    'key' => env('APP_KEY', base64_decode('%YOUR_COPIED_APPKEY%'));
+
+    If you have your project connected to a database, update the database credentials from /config/database.php. Lookup for mysql vector and update the database, username, password properly.
+
+  ...And this should do the trick. If you have further questions, a tutorial has been written about the entire procedure here: https://www.000webhost.com/forum/t/deploy-laravel-project-into-000webhost-site/127323/
