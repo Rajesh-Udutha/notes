@@ -1,0 +1,17 @@
+$(".js-button").on("click", function(e) {
+    e.preventDefault();
+
+    var name = $(this).data("name"),
+        href = $(this).attr("href");
+
+    $.ajax({
+        url : 'statscript.php',
+        type : 'post',
+        data : 'name=' + name,
+        complete: function () {
+            alert('Hey!');
+            // if you want to redirect the user after the statistics sent:
+            //window.location.href = href;
+        }
+    })
+});
