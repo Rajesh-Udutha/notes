@@ -1,0 +1,26 @@
+Sharing a page link on to the social media
+facebook, twitter, instagram, gmail, linkedin
+
+sample code should be like
+
+	                          <ul class="">
+			                        <li class="">
+			                          <div class="" data-href="http://maplenestinc.com/knowliom/projectDetails/<?php echo $id;?>" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fmaplenestinc.com%2Fknowliom%2FprojectDetails%2F<?php echo $id?>&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i class="fab fa-facebook-f"></i></a></div>  
+			                          <!--<a href=""><i class="fab fa-facebook-f"></i></a>-->
+			                        </li>
+			                        <li class="">
+			                          <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+			                        </li>
+			                        <li class="">
+			                          <a href="https://www.linkedin.com/sharing/share-offsite/?url=http://maplenestinc.com/knowliom/projectDetails/<?php echo $id;?>" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+			                        </li>
+			                        <li class="">
+			                         <a  href="https://twitter.com/intent/tweet?url=http://maplenestinc.com/knowliom/projectDetails/<?php echo $id;?>"><i class="fab fa-twitter"></i></a>
+			                        </li>
+			                        <li class="">
+			                          <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=&body=http://maplenestinc.com/knowliom/projectDetails/<?php echo $id;?>&ui=2&tf=1&pli=1" target="blank"><i class="fal fa-envelope"></i></a>
+			                        </li>
+			                        <li class="">
+			                          <a href=""><i class="fal fa-share-alt"></i></a>
+			                        </li>
+			                     </ul>
