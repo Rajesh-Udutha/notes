@@ -1,1 +1,50 @@
 Zip a folder along with subfolders in php
+
+
+
+<?php
+function zip_r($from, $zip, $base=false) {
+    if (!file_exists($from) OR !extension_loaded('zip')) {return false;}
+    if (!$base) {$base = $from;}
+    $base = trim($base, '/');
+    $zip->addEmptyDir($base);
+    $dir = opendir($from);
+    while (false !== ($file = readdir($dir))) {
+        if ($file == '.' OR $file == '..') {continue;}
+
+        if (is_dir($from . '/' . $file)) {
+            zip_r($from . '/' . $file, $zip, $base . '/' . $file);
+        } else {
+            $zip->addFile($from . '/' . $file, $base . '/' . $file);
+        }
+    }
+    return $zip;
+}
+
+// mart zip data
+$from = "F:/xampp-7.2/htdocs/mart";
+$base = "basezipfolder";
+$zip = new ZipArchive();
+$fileName = "Admin-".date('Y-m-d').".zip";
+$zip->open($fileName, ZIPARCHIVE::CREATE);
+$zip = zip_r($from, $zip, $base);
+//echo $from."***from***";
+//echo $base."***base***";
+//echo $from;
+$zip->close();
+
+// end of mart zip data.
+
+// restprj zip data
+$from2 = "F:/xampp-7.2/htdocs/restprj";
+$base2 = "basezipfolder";
+$zip2 = new ZipArchive();
+$fileName2 = "Admin-".date('Y-m-d').".zip";
+$zip2->open($fileName2, ZIPARCHIVE::CREATE);
+$zip2 = zip_r($from2, $zip2, $base2);
+//echo $from."***from***";
+//echo $base."***base***";
+//echo $from;
+$zip2->close();
+
+// end of mart zip data
