@@ -1,0 +1,200 @@
+Requirements :
+  MerchantID,
+  Passcode
+
+
+Step 1: First login to the admin panel of Bambora through following line
+        https://web.na.bambora.com/admin/sDefault.asp
+        
+Step 2: Reference this url
+        https://dev.na.bambora.com/docs/guides/merchant_quickstart/calling_APIs/
+        
+Step 3: Generate the passcode as per instructions from the url
+  
+        https://docs.woocommerce.com/document/bambora/#prettyPhoto
+        From step 1;
+        
+Step 4: now you need base64 version for passcode
+        Generate base64 version from the url
+        
+        https://dev.na.bambora.com/docs/forms/encode_api_passcode/
+        
+        enter merchant id and passcode, you will get base64passcode
+       
+step 5: first run tokens api through curl or post man
+
+             code follows and refer attachement 1
+
+             <?php
+
+          $curl = curl_init();
+
+          curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.na.bambora.com/scripts/tokenization/tokens",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "{\r\n     \"number\":\"4030000010001234\",\r\n     \"expiry_month\":\"02\",\r\n     \"expiry_year\":\"20\",\r\n     \"cvd\":\"123\"\r\n  }",
+            CURLOPT_HTTPHEADER => array(
+              "cache-control: no-cache",
+              "content-type: application/json",
+              "postman-token: a9316398-2812-c4e2-5f04-0b66f6d6d319"
+            ),
+          ));
+
+          $response = curl_exec($curl);
+          $err = curl_error($curl);
+
+          curl_close($curl);
+
+          if ($err) {
+            echo "cURL Error #:" . $err;
+          } else {
+            echo $response;
+          }
+
+
+          from this the response is
+
+            {
+              "token": "cg8-05968422-884c-4a1e-9f5b-93a89d40c022",
+              "code": 1,
+              "version": 1,
+              "message": ""
+          }
+
+  
+step 6: now we have to run profile api by passing token as code from above response
+
+  sample code is follows
+  
+          <?php
+
+      $curl = curl_init();
+
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.na.bambora.com/v1/profiles",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "{\r\n      \"token\":{  \r\n        \"name\":\"'Mr. Card1 Testerson\",\r\n        \"code\":\"cg8-05968422-884c-4a1e-9f5b-93a89d40c022\"\r\n      }\r\n  }",
+        CURLOPT_HTTPHEADER => array(
+          "authorization: Passcode MjI1NzkzNzkzOjUxMjNEREYwNTdBNTQ4NTBiNzU0OTE0MWVFNTU2NTdE",
+          "cache-control: no-cache",
+          "content-type: application/json",
+          "postman-token: c6f02402-db4c-7c8c-3200-331078ff4598"
+        ),
+      ));
+
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      curl_close($curl);
+
+      if ($err) {
+        echo "cURL Error #:" . $err;
+      } else {
+        echo $response;
+      }
+  
+    here we have to pass, base64 version passcode in headers (from above  "authorization: Passcode MjI1NzkzNzkzOjUxMjNEREYwNTdBNTQ4NTBiNzU0OTE0MWVFNTU2NTdE",) 
+  
+    response is 
+           "customer_code":"EA110400E67f4ad3977176983B698c7c"
+           
+           
+step 7: Now for payment, we have to send this customer_code in url body as follows
+    
+                     <?php
+
+          $curl = curl_init();
+
+          curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.na.bambora.com/v1/payments",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "{\r\n     \"amount\":257.00,\r\n     \"payment_method\":\"payment_profile\",\r\n     \"payment_profile\":{\r\n       \"customer_code\":\"EA110400E67f4ad3977176983B698c7c\",\r\n       \"card_id\":\"1\",\r\n       \"complete\":\"true\",\r\n       \"billing\" : {\r\n        \"name\" : \"Adult\",\r\n        \"email_address\" : \"123@email.com\",\r\n        \"phone_number\" : \"1234567890\",\r\n        \"address_line1\" : \"456-123 Shipping St.\",\r\n        \"city\" : \"Shippingville\",\r\n        \"province\" : \"BC\",\r\n        \"postal_code\" : \"V8J9I5\",\r\n        \"country\" : \"CA\"\r\n       }\r\n     },\r\n    \r\n     \t\r\n    \r\n  }",
+            CURLOPT_HTTPHEADER => array(
+              "authorization: Passcode MjI1NzkzNzkzOjUxMjNEREYwNTdBNTQ4NTBiNzU0OTE0MWVFNTU2NTdE",
+              "cache-control: no-cache",
+              "content-type: application/json",
+              "postman-token: b5687c0e-c80e-dcbd-e54a-00fad03f9016"
+            ),
+          ));
+
+          $response = curl_exec($curl);
+          $err = curl_error($curl);
+
+          curl_close($curl);
+
+          if ($err) {
+            echo "cURL Error #:" . $err;
+          } else {
+            echo $response;
+          }
+          ?>
+       here we have to pass, base64 version passcode in headers (from above  "authorization: Passcode MjI1NzkzNzkzOjUxMjNEREYwNTdBNTQ4NTBiNzU0OTE0MWVFNTU2NTdE",) 
+        and customer_code from previous response
+        
+        the response is as follows 
+
+                        {
+                    "id": "10000007",
+                    "authorizing_merchant_id": 225793793,
+                    "approved": "1",
+                    "message_id": "1",
+                    "message": "Approved",
+                    "auth_code": "TEST",
+                    "created": "2021-02-20T08:21:45",
+                    "order_number": "10000007",
+                    "type": "P",
+                    "payment_method": "CC",
+                    "risk_score": 0,
+                    "amount": 257,
+                    "custom": {
+                        "ref1": "",
+                        "ref2": "",
+                        "ref3": "",
+                        "ref4": "",
+                        "ref5": ""
+                    },
+                    "card": {
+                        "card_type": "VI",
+                        "last_four": "1234",
+                        "address_match": 0,
+                        "postal_result": 0,
+                        "avs_result": "0",
+                        "cvd_result": "2",
+                        "avs": {
+                            "id": "U",
+                            "message": "Address information is unavailable.",
+                            "processed": false
+                        }
+                    },
+                    "links": [
+                        {
+                            "rel": "void",
+                            "href": "https://api.na.bambora.com/v1/payments/10000007/void",
+                            "method": "POST"
+                        },
+                        {
+                            "rel": "return",
+                            "href": "https://api.na.bambora.com/v1/payments/10000007/returns",
+                            "method": "POST"
+                        }
+                    ]
+                }
+
+
+Follow steps 5,6,7 in attachments respectively
+
