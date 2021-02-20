@@ -196,5 +196,5 @@ step 7: Now for payment, we have to send this customer_code in url body as follo
                 }
 
 
-Follow steps 5,6,7 in attachments respectively
+Follow steps 5,6,7 in attachments respectively from postman
 
