@@ -1,0 +1,20 @@
+Installing mcrypt extension in php 7.2 version in linux
+Please follow the steps listed in below url
+https://websiteforstudents.com/install-php-7-2-mcrypt-module-on-ubuntu-18-04-lts/
+
+then open php.ini located at
+cd /etc/php/7.2/apache2/   //goes to the location
+nano php.ini                //opens the php.ini file in editor/terminal
+
+add below line in php.ini
+extension=mcrypt.so
+
+save by ctrl+x and enter
+
+then restart apache by
+
+sudo service apache2 restart
+
+mcrypt has installed successfully in system
+
+
