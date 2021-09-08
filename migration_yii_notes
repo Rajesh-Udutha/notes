@@ -1,0 +1,8 @@
+
+    cd C:\xampp\htdocs\raptor\_protected
+C:\xampp\htdocs\raptor\_protected>c:\xampp\php\php yii migrate/create --migrationPath=@frontend/migrations migration_script_name
+
+    run these two commands
+
+    php yii migrate --migrationPath=@frontend/migrations/
+run this to execute migration scripts
