@@ -1,0 +1,52 @@
+Step 1. 
+      For any new task, we will create a new branch in git with the task id
+      let say, for task 4598 the branch in git is feature/TPS-4598.
+      We will switch to that branch in local.
+
+Step 2. 
+      After completing the task, we will commit and push the code to task branch.
+      Let say to feature/TPS-4598 branch.
+      We will create a pull request from feature/TPS-4598 branch to development branch.
+      
+Step 3. 
+      For created pull request, code review will be done and reviewer will approve the pull request or put comments.
+      After approve, we will merge the code.
+      The code will be merged from feature/TPS-4598 to development branch.
+      The completed task code is moved to development branch.
+
+Step 4:
+      Now we will create another pull request from development branch to release/raptor_qa branch
+      release/raptor_qa is branch for qa environment.
+      The reviewer will approve and merge the pull request.
+      Now the task data has been merged to release/raptor_qa branch.
+      
+Step 5:
+      Now we have to connect to aws server through putty with ip address and ppk file.
+      Command window will be opened.
+      We have to login as user, here username is ec2-user.
+
+Step 6: 
+      Now we have to check the git branch in server, by using following command
+      
+      git branch
+      
+      press enter, it will show the current branch of aws server, and it should be release/raptor_qa otherwise we have to switch to release/raptor_qa branch.
+      
+Step 7:
+      In release/raptor_qa branch, we have to move to project directory by following command
+      
+      cd raptor-qa/raptor/_protected
+      Now we are in _protected folder.
+      
+      Now we have to take pull from release/raptor_qa branch to server by following command
+      
+      git pull
+      
+      Press enter, the server asks for password then enter the password and, a editor will be opened with all files list, click esc and :q enter, to exit from editor
+      All the files will be merged from release/raptor_qa branch to aws server
+      
+      For any migrations, we have to apply by following command
+      php yii migrate --migrationPath=@frontend/migrations
+      
+      
+      
