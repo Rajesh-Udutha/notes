@@ -1,0 +1,9 @@
+If any error occurs in pjax request, the whole page will redirect browser.
+To restrict a pjax request error, add following code in the common javascript file 
+
+//error on pjax
+$( document ).on('pjax:error', function( event, request ) {
+ 	event.preventDefault();
+});
+
+the above changes, will return false i.e will not redirect browser on pjax request error.
