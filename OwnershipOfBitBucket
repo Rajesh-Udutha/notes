@@ -1,0 +1,18 @@
+While deploying the code to server. It will ask for password. This is the password for bitbucket account from which code has been cloned from bitbucket.
+
+You can find the username of bitbucket in server putty in project folder.
+
+go to project folder 
+list all hidden files by running command ls -a
+
+you will find .git folder, change to .git folder by cd .git
+
+now list all hidden files by ls -a
+you will find config file, open that file using vi config
+
+you will get to know the user of bitbucket linked to the current server
+
+We can change this ownership of user(the user of bitbucket) by following steps from below url
+https://stackoverflow.com/questions/22844806/how-to-change-my-git-username-in-terminal
+
+
