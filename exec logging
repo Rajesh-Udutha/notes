@@ -1,0 +1,11 @@
+exec is command used to execute statement or file in php.
+PHP will not wait until exec to be execute.
+If we have to execute a file/statement in background in php, 
+we can use exec command, this command will execute in background without interrupting php.
+We can get the output from the exec command with following syntax
+
+  exec('php _protected/yii '.$integrationConfig.'/run-client-integration  2>&1', $output);
+  
+  here print_r($output) will print all the echo's and result.
+  it will also prints the steps/echo statements 
+  
